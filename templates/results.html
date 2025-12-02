@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 Anxiety Text Classifier</h1>
+            <p>Analysis Results</p>
+        </header>
+
+        <main>
+            <!-- Original Text Section -->
+            <section class="results-section">
+                <h2>Original Text</h2>
+                <div class="text-box">
+                    {{ text }}
+                </div>
+            </section>
+
+            <!-- Prediction Result -->
+            <section class="prediction-section">
+                <h2>Classification Result</h2>
+                <div class="prediction-result {% if prediction.lower() == 'anxiety' %}anxiety{% else %}normal{% endif %}">
+                    <div class="prediction-label">{{ prediction }}</div>
+                    <div class="confidence-container">
+                        <label>Confidence</label>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: {{ confidence }}%"></div>
+                        </div>
+                        <div class="confidence-value">{{ confidence }}%</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Keywords Analysis -->
+            <section class="keywords-section">
+                <h2>Contributing Keywords</h2>
+                <div class="keywords-grid">
+                    <div class="keywords-box">
+                        <h3>😰 Anxiety Indicators</h3>
+                        <div class="keywords-list">
+                            {% if anxiety_keywords %}
+                                {% for word, weight in anxiety_keywords %}
+                                    <span class="keyword-badge anxiety" title="Weight: {{ weight }}">
+                                        {{ word }}
+                                        <small>({{ weight }})</small>
+                                    </span>
+                                {% endfor %}
+                            {% else %}
+                                <p class="no-keywords">No anxiety indicators found</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="keywords-box">
+                        <h3>😊 Normal Indicators</h3>
+                        <div class="keywords-list">
+                            {% if normal_keywords %}
+                                {% for word, weight in normal_keywords %}
+                                    <span class="keyword-badge normal" title="Weight: {{ weight }}">
+                                        {{ word }}
+                                        <small>({{ weight }})</small>
+                                    </span>
+                                {% endfor %}
+                            {% else %}
+                                <p class="no-keywords">No normal indicators found</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Information Box -->
+            <section class="info-section">
+                <div class="info-box">
+                    <h3>ℹ️ About This Analysis</h3>
+                    <p>
+                        This classifier uses a Machine Learning model (LinearSVC) trained on text data to identify anxiety-related content.
+                        The model analyzes word patterns and assigns a confidence score to its prediction.
+                    </p>
+                    <p>
+                        <strong>Note:</strong> This is a demonstration project. Results should not be used for medical diagnosis or treatment decisions.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <section class="action-section">
+                <a href="/" class="btn btn-primary">← Analyze Another Text</a>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Anxiety Text Classifier | Machine Learning Project</p>
+        </footer>
+    </div>
+</body>
+</html>

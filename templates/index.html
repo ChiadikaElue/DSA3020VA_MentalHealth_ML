@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anxiety Text Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 Anxiety Text Classifier</h1>
+            <p>Analyze text to identify anxiety indicators</p>
+        </header>
+
+        <main>
+            <!-- Input Section -->
+            <section class="input-section">
+                <h2>Enter Your Text</h2>
+                <form action="/predict" method="POST" class="prediction-form">
+                    <textarea 
+                        name="text" 
+                        placeholder="Enter text to analyze..." 
+                        required
+                        rows="6"
+                    ></textarea>
+                    <button type="submit" class="btn btn-primary">Analyze Text</button>
+                </form>
+            </section>
+
+            <!-- Examples Section -->
+            <section class="examples-section">
+                <h2>Sample Examples</h2>
+                <div class="examples-grid">
+                    <div class="example-card anxiety">
+                        <h3>😰 Anxiety Examples</h3>
+                        <ul class="example-list">
+                            <li>
+                                <span>I feel so restless and can't sleep, my heart is racing for no reason.</span>
+                                <button type="button" class="btn-small" onclick="useExample(this)">Use This</button>
+                            </li>
+                            <li>
+                                <span>I'm constantly worried about everything, even small things make me anxious.</span>
+                                <button type="button" class="btn-small" onclick="useExample(this)">Use This</button>
+                            </li>
+                            <li>
+                                <span>Why am I so nervous all the time? I can't focus on anything.</span>
+                                <button type="button" class="btn-small" onclick="useExample(this)">Use This</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="example-card normal">
+                        <h3>😊 Normal Examples</h3>
+                        <ul class="example-list">
+                            <li>
+                                <span>Had a great day at work today, completed all my tasks on time.</span>
+                                <button type="button" class="btn-small" onclick="useExample(this)">Use This</button>
+                            </li>
+                            <li>
+                                <span>Going out for dinner with friends this evening, looking forward to it.</span>
+                                <button type="button" class="btn-small" onclick="useExample(this)">Use This</button>
+                            </li>
+                            <li>
+                                <span>The weather is beautiful today, perfect for a walk in the park.</span>
+                                <button type="button" class="btn-small" onclick="useExample(this)">Use This</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Documentation Section -->
+            <section class="api-section">
+                <h2>API Usage</h2>
+                <p>Use the API endpoint programmatically:</p>
+                <div class="code-block">
+                    <pre><code>POST /api/predict
+Content-Type: application/json
+
+{
+    "text": "Your text here"
+}
+
+Response:
+{
+    "text": "Your text here",
+    "prediction": "Anxiety",
+    "confidence": 65.82,
+    "status": "success"
+}</code></pre>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Anxiety Text Classifier | Machine Learning Project</p>
+        </footer>
+    </div>
+
+    <script>
+        function useExample(button) {
+            const exampleText = button.previousElementSibling.textContent;
+            const textarea = document.querySelector('textarea[name="text"]');
+            textarea.value = exampleText;
+            textarea.focus();
+            textarea.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
